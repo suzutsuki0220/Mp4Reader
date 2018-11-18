@@ -1,0 +1,6 @@
+version: "2"         # required to adjust maintainability checks
+plugins:
+  csslint:
+    enabled: true
+  eslint:
+    enabled: true
