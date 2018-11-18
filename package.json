@@ -1,0 +1,17 @@
+{
+  "name": "mp4reader",
+  "version": "0.0.1",
+  "description": "read headers of MP4 container",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^3.0.9"
+  },
+  "scripts": {
+    "start": "./node_modules/.bin/electron ./"
+  }
+}
