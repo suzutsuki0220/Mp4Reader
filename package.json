@@ -4,14 +4,12 @@
   "description": "read headers of MP4 container",
   "main": "index.js",
   "scripts": {
+    "start": "./node_modules/.bin/electron ./app",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "suzutsuki0220",
   "license": "MIT",
   "devDependencies": {
     "electron": "^3.0.9"
-  },
-  "scripts": {
-    "start": "./node_modules/.bin/electron ./"
   }
 }
