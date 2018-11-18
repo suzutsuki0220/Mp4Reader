@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "start": "./node_modules/.bin/electron ./app",
-    "test": "jest"
+    "test": "./node_modules/.bin/jest"
   },
   "author": "suzutsuki0220",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^3.0.9"
+    "electron": "^3.0.9",
+    "jest": "^23.6.0"
   },
   "jest": {
     "testEnvironment": "node"
