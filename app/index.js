@@ -3,8 +3,8 @@
 // Electronのモジュール
 const electron = require("electron");
 
-// アプリケーションをコントロールするモジュール
 const app = electron.app;
+const Menu = electron.Menu;
 
 // ウィンドウを作成するモジュール
 const BrowserWindow = electron.BrowserWindow;
@@ -31,3 +31,33 @@ app.on("ready", () => {
     mainWindow = null;
   });
 });
+
+// menu
+const menu_template = [
+    {
+        label: app.getName(),
+        submenu: [
+            //{role: 'about'},
+            {
+                role: 'close',
+                accelerator: 'Command+Q'
+            }
+        ]
+    },
+    {
+        label: 'View',
+        submenu: [
+            {role: 'reload'},
+            {
+                label: '開発者ツール',
+                accelerator: 'Alt+Command+I',
+                click: function() {
+                    mainWindow.openDevTools();
+                }
+            }
+        ]
+    }
+];
+
+const menu = Menu.buildFromTemplate(menu_template);
+Menu.setApplicationMenu(menu);

@@ -1,10 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>Sample</title>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title></title>
 </head>
 <body>
-  <p>Hello World</p>
+<script type="text/javascript">
+    const readfile = require('./scripts/read_file.js');
+    readfile.load('data.dat');
+</script>
+<p>Hello World</p>
+<div id="load_status">status</div>
+<div id="size">size</div>
+<div id="data">buffer</div>
 </body>
 </html>
