@@ -2,24 +2,69 @@
 //   https://nodejs.org/api/buffer.html
 
 const fs = require('fs');
-const viewStatus = require('./view_status.js');
 
-function afterReadWork(err, content) {
-    if (err) {
-        viewStatus.setStatus(err);
-        return;
+const parent_types = [
+    'moov',
+    'trak',
+    'mdia',
+    'edts',
+    'udta',
+    'minf',
+    'stbl',
+    'mvex'
+];
+
+function hasChildAtom(type) {
+    for (var i=0; i<parent_types.length; i++) {
+        if (parent_types[i] === type) {
+            return true;
+        }
     }
-
-    var buf = Buffer.from(content, 'binary');
-
-    var bitmapSize = buf.readUInt32LE(2);  // 3バイト目の32bit整数(リトルエンディアン)を読む
-    var bitmap = buf.slice(0, bitmapSize - 1);  // 先頭からbitmapSize分の塊を読む
-
-    viewStatus.setStatus("load successful");
-    viewStatus.setSize(bitmapSize);
-    viewStatus.setData(bitmap);
+    return false;
 }
 
-module.exports.load = function(filename) {
+function getAtom(buf) {
+    const size = buf.readUIntBE(0, 4);
+    const type = buf.toString('ascii', 4, 8);
+    const payload = buf.slice(8, size);
+
+    let atom = {
+        size: size,
+        type: type,
+        payload: payload
+    };
+
+    atom.children = new Array();
+    if (hasChildAtom(type) === true) {
+        let offset = 0;
+        while (offset < payload.length) {
+            const atom_child = getAtom(payload.slice(offset));
+            atom.children.push(atom_child);
+            offset += atom_child.size;
+        }
+    }
+
+    return atom;
+}
+
+module.exports.load = function(filename, callback) {
+    var afterReadWork = function(err, content) {
+        if (err) {
+            throw new Error(err);
+        }
+
+        var buf = Buffer.from(content, 'binary');
+
+        var data = new Array();
+        var offset = 0;
+        while (offset < buf.length) {
+            const atom = getAtom(buf.slice(offset));
+            data.push(atom);
+            offset += atom.size;
+        }
+
+        callback(data);
+    };
+
     fs.readFile(filename, afterReadWork);
 };

@@ -2,16 +2,16 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
+<script type="text/javascript" src="./scripts/mp4_reader.js"></script>
 <meta http-equiv="Content-Script-Type" content="text/javascript">
 <meta http-equiv="Content-Style-Type" content="text/css">
 <title></title>
 </head>
 <body>
-<script type="text/javascript">
-    const readfile = require('./scripts/read_file.js');
-    readfile.load('data.dat');
-</script>
 <p>Hello World</p>
+<form name="f1">
+File: <input type="text" name="data_path" size="50"><input type="button" name="btn_open_file_dialog" value="📁" onClick="openFileDialog()">
+</form>
 <div id="load_status">status</div>
 <div id="size">size</div>
 <div id="data">buffer</div>
