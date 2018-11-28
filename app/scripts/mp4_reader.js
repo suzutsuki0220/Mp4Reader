@@ -1,5 +1,6 @@
 const readfile = require('./scripts/read_file');
 const viewStatus = require('./scripts/view_status');
+const mp4Atom = require('./scripts/mp4_atom');
 
 function openFileDialog() {
     const dialog = require('electron').remote.dialog;
@@ -18,15 +19,25 @@ function openFileDialog() {
     }
 }
 
-function output(data) {
-    console.log(data);
-
-    var str;
-    str += '<ul>';
+function outputChild(data) {
+    var tag = "";
+    tag += '<ul>';
     for (var i=0; i<data.length; i++) {
-        str += '<li>' + data[i].type + ' (' + data[i].size + ')</li>';
+        tag += '<li>';
+        tag += '<a href="javascript:showPayload(\'' + data[i].type + '\', \'data[i].payload\')">' + data[i].type + '</a>';
+        tag += ' (' + data[i].size + ')</li>';
+        if (data[i].children.length !== 0) {
+            tag += outputChild(data[i].children);
+        }
     }
-    str += '</ul>';
+    tag += '</ul>';
+
+    return tag;
+}
+
+function output(data) {
+    var str = "";
+    str += outputChild(data);
 
 //    var str = "Atom size: " + data.atom_size + '<br>\n'
 //            + "Type: " + data.type + '<br>\n'
@@ -34,5 +45,13 @@ function output(data) {
 
 //    viewStatus.setStatus(data.status);
 //    viewStatus.setSize(data.size);
-    viewStatus.setData(str);
+    viewStatus.setStructure(str);
+}
+
+function showPayload(type, payload) {
+    if (mp4Atom.atom[type]) {
+        viewStatus.setPayload(mp4Atom.atom[type].description + '<br>'); // + mp4Atom.atom[type].decode(payload));
+    } else {
+        viewStatus.setPayload('unknown');
+    }
 }
