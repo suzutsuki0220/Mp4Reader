@@ -5,14 +5,19 @@
   "description": "read headers of MP4 container",
   "main": "./app/index.js",
   "scripts": {
+    "css-build": "node-sass _sass/main.scss app/stylesheets/main.css",
     "start": "./node_modules/.bin/electron .",
     "test": "./node_modules/.bin/jest"
   },
   "author": "suzutsuki0220",
   "license": "MIT",
+  "dependencies": {
+    "electron": "^3.0.9"
+  },
   "devDependencies": {
-    "electron": "^3.0.9",
-    "jest": "^23.6.0"
+    "bulma": "^0.7.2",
+    "jest": "^23.6.0",
+    "node-sass": "^4.10.0"
   },
   "jest": {
     "testEnvironment": "node"

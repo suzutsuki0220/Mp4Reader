@@ -5,6 +5,9 @@
 <script type="text/javascript" src="./scripts/mp4_reader.js"></script>
 <meta http-equiv="Content-Script-Type" content="text/javascript">
 <meta http-equiv="Content-Style-Type" content="text/css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="./stylesheets/main.css">
+<link rel="stylesheet" type="text/css" href="./stylesheets/mp4reader.css">
 <title></title>
 </head>
 <body>
@@ -12,11 +15,15 @@
 <form name="f1">
 File: <input type="text" name="data_path" size="50"><input type="button" name="btn_open_file_dialog" value="📁" onClick="openFileDialog()">
 </form>
-<div id="load_status">status</div>
-<div id="size">size</div>
-<div id="data">
-<span id="structure"></span>
-<span id="payload"></span>
+<div class="container">
+<div class="box-left">
+ATOM構造<br><span id="structure"></span>
 </div>
+<div class="box-right">
+Payload<br><span id="payload"></span>
+</div>
+<div class="clear"></div>
+</div>
+<div id="load_status"></div>
 </body>
 </html>

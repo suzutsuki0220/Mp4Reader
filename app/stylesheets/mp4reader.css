@@ -1,0 +1,20 @@
+.container {
+    width: 100%;
+}
+
+.box-left {
+    width: 30%;
+    background-color: #333333;
+    color: #ffffff;
+    float: left;
+}
+
+.box-right {
+    width: 70%;
+    background-color: #cccccc;
+    float: right;
+}
+
+.clear {
+    clear: both;
+}
