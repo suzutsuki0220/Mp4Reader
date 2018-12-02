@@ -13,7 +13,17 @@
 <body>
 <p>MP4 reader</p>
 <form name="f1">
-File: <input type="text" name="data_path" size="50"><input type="button" name="btn_open_file_dialog" value="📁" onClick="openFileDialog()">
+    <div class="level-item">
+        <p class="subtitle is-5">
+            File:
+        </p>
+        <p class="control">
+            <input type="text" class="input" name="data_path" size="100" placeholder="MPEG4 file">
+        </p>
+        <p class="control">
+            <input type="button" class="button" name="btn_open_file_dialog" value="📁" onClick="openFileDialog()">
+        </p>
+    </div>
 </form>
 <div class="container">
 <div class="box-left">

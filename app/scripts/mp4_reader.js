@@ -2,6 +2,8 @@ const readfile = require('./scripts/read_file');
 const viewStatus = require('./scripts/view_status');
 const mp4Atom = require('./scripts/mp4_atom');
 
+var mp4data;
+
 function openFileDialog() {
     const dialog = require('electron').remote.dialog;
 
@@ -10,7 +12,7 @@ function openFileDialog() {
         title: 'select a data file',
         defaultPath: '.',
         filters: [
-            {name : 'MPEG4 media', extensions: ['mp4', 'm4a', 'm4v', 'mov']}
+            {name: 'MPEG4 media', extensions: ['mp4', 'm4a', 'm4v', 'mov']}
         ]});
 
     if (filenames && filenames.length > 0) {
@@ -24,7 +26,7 @@ function outputChild(data) {
     tag += '<ul>';
     for (var i=0; i<data.length; i++) {
         tag += '<li>';
-        tag += '<a href="javascript:showPayload(\'' + data[i].type + '\', \'data[i].payload\')">' + data[i].type + '</a>';
+        tag += '<a href="javascript:showPayload(' + data[i].payload_position + ')">' + data[i].type + '</a>';
         tag += ' (' + data[i].size + ')</li>';
         if (data[i].children.length !== 0) {
             tag += outputChild(data[i].children);
@@ -35,9 +37,10 @@ function outputChild(data) {
     return tag;
 }
 
-function output(data) {
-    var str = "";
-    str += outputChild(data);
+function output(atoms) {
+    mp4data = atoms;
+
+    var str = '<div class="content">' + outputChild(atoms) + '</div>';
 
 //    var str = "Atom size: " + data.atom_size + '<br>\n'
 //            + "Type: " + data.type + '<br>\n'
@@ -48,9 +51,20 @@ function output(data) {
     viewStatus.setStructure(str);
 }
 
-function showPayload(type, payload) {
+function showPayload(position) {
+    var i = 0;
+    var get_atom;
+    for (var i in mp4data) {
+        if (mp4data[i].payload_position === position) {
+            get_atom = mp4data[i];
+            break;
+        }
+    }
+    const type = get_atom.type;
+    const payload = get_atom.payload;
+
     if (mp4Atom.atom[type]) {
-        viewStatus.setPayload(mp4Atom.atom[type].description + '<br>'); // + mp4Atom.atom[type].decode(payload));
+        viewStatus.setPayload(mp4Atom.atom[type].description + '<br>' + mp4Atom.atom[type].display(payload));
     } else {
         viewStatus.setPayload('unknown');
     }

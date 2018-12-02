@@ -2,45 +2,39 @@
 //   https://nodejs.org/api/buffer.html
 
 const fs = require('fs');
-
-const parent_types = [
-    'moov',
-    'trak',
-    'mdia',
-    'edts',
-    'udta',
-    'minf',
-    'stbl',
-    'mvex'
-];
+const mp4Atom = require('./mp4_atom');
 
 function hasChildAtom(type) {
-    for (var i=0; i<parent_types.length; i++) {
-        if (parent_types[i] === type) {
-            return true;
+    for (var atom in mp4Atom.atom) {
+        if (atom === type) {
+            return mp4Atom.atom[atom].hasChild;
         }
     }
     return false;
 }
 
-function getAtom(buf) {
+function getAtom(mp4data, offset) {
+    const buf = mp4data.slice(offset);
+
     const size = buf.readUIntBE(0, 4);
-    const type = buf.toString('ascii', 4, 8);
     const payload = buf.slice(8, size);
+    const maybe_broken = size > buf.length ? true : false;
 
     let atom = {
         size: size,
-        type: type,
+        type: buf.toString('ascii', 4, 8),
+        maybe_broken: maybe_broken,
+        payload_position: offset + 8,
         payload: payload
     };
 
     atom.children = new Array();
-    if (hasChildAtom(type) === true) {
-        let offset = 0;
-        while (offset < payload.length) {
-            const atom_child = getAtom(payload.slice(offset));
+    if (hasChildAtom(atom.type) === true) {
+        let payload_offset = 0;
+        while (payload_offset < atom.payload_size) {
+            const atom_child = getAtom(mp4data, atom.payload_position + payload_offset);
             atom.children.push(atom_child);
-            offset += atom_child.size;
+            payload_offset += atom_child.size;
         }
     }
 
@@ -53,17 +47,17 @@ module.exports.load = function(filename, callback) {
             throw new Error(err);
         }
 
-        var buf = Buffer.from(content, 'binary');
+        var mp4_data = Buffer.from(content, 'binary');
 
-        var data = new Array();
+        var atoms = new Array();
         var offset = 0;
-        while (offset < buf.length) {
-            const atom = getAtom(buf.slice(offset));
-            data.push(atom);
+        while (offset < mp4_data.length) {
+            const atom = getAtom(mp4_data, offset);
+            atoms.push(atom);
             offset += atom.size;
         }
 
-        callback(data);
+        callback(atoms);
     };
 
     fs.readFile(filename, afterReadWork);
