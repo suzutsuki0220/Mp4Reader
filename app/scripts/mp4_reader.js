@@ -26,7 +26,7 @@ function outputChild(data) {
     tag += '<ul>';
     for (var i=0; i<data.length; i++) {
         tag += '<li>';
-        tag += '<a href="javascript:showPayload(' + data[i].payload_position + ')">' + data[i].type + '</a>';
+        tag += '<a href="javascript:showPayload([' + data[i].index.toString() + '])">' + data[i].type + '</a>';
         tag += ' (' + data[i].size + ')</li>';
         if (data[i].children.length !== 0) {
             tag += outputChild(data[i].children);
@@ -51,15 +51,13 @@ function output(atoms) {
     viewStatus.setStructure(str);
 }
 
-function showPayload(position) {
+function showPayload(index) {
     var i = 0;
-    var get_atom;
-    for (var i in mp4data) {
-        if (mp4data[i].payload_position === position) {
-            get_atom = mp4data[i];
-            break;
-        }
+    var get_atom = mp4data[index[0]];
+    for (var i=1; i<index.length; i++) {
+        get_atom = get_atom.children[index[i]];
     }
+
     const type = get_atom.type;
     const payload = get_atom.payload;
 
