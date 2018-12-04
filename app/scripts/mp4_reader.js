@@ -51,6 +51,22 @@ function output(atoms) {
     viewStatus.setStructure(str);
 }
 
+function makePayloadElem(atom) {
+    const type = atom.type;
+    const payload = atom.payload;
+
+    var elem = "";
+    elem += atom.type;
+    if (mp4Atom.atom[type]) {
+        elem += " (" + mp4Atom.atom[type].description + ')<br><hr>';
+        elem += mp4Atom.atom[type].display(atom.payload);
+    } else {
+        elem += 'unknown data';
+    }
+
+    return elem;
+}
+
 function showPayload(index) {
     var i = 0;
     var get_atom = mp4data[index[0]];
@@ -58,12 +74,5 @@ function showPayload(index) {
         get_atom = get_atom.children[index[i]];
     }
 
-    const type = get_atom.type;
-    const payload = get_atom.payload;
-
-    if (mp4Atom.atom[type]) {
-        viewStatus.setPayload(mp4Atom.atom[type].description + '<br>' + mp4Atom.atom[type].display(payload));
-    } else {
-        viewStatus.setPayload('unknown');
-    }
+    viewStatus.setPayload(makePayloadElem(get_atom));
 }
