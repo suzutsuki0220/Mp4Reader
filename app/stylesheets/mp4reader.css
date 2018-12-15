@@ -1,18 +1,28 @@
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
 .container {
     width: 100%;
+    height: calc(100% - 80px);
 }
 
 .box-left {
     width: 30%;
+    height: 100%;
     background-color: #333333;
     color: #ffffff;
     float: left;
+    overflow: auto;
 }
 
 .box-right {
     width: 70%;
+    height: 100%;
     background-color: #cccccc;
     float: right;
+    overflow: auto;
 }
 
 .clear {
