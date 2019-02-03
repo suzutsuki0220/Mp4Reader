@@ -12,6 +12,7 @@
   "author": "suzutsuki0220",
   "license": "MIT",
   "dependencies": {
+    "big-integer": "^1.6.41",
     "electron": "^3.0.9"
   },
   "devDependencies": {
