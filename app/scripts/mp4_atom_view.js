@@ -44,7 +44,7 @@ module.exports.parseFileTypeBox = function(payload) {
 };
 
 module.exports.parseMovieHeaderBox = function(payload) {
-    var offset, creation_time, modification_time, timescale, duration;
+    var offset;
     const fullbox = getFullBox(payload);
     var kv_array = [
         {key: "Version", value: fullbox.version}
