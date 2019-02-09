@@ -32,6 +32,9 @@ function getAtom(mp4data, offset, index) {
         while (payload_offset < atom.payload.length) {
             const atom_index = index.concat(atom.children.length);
             const atom_child = getAtom(mp4data, atom.payload_position + payload_offset, atom_index);
+            if (atom_child.size == 0 || atom_child.size > atom.payload_length - payload_offset) {
+                break;
+            }
             atom.children.push(atom_child);
             payload_offset += atom_child.size;
         }
