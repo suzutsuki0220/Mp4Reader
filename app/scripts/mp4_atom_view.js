@@ -1,3 +1,21 @@
+const bigInt = require('./bigint');
+
+function makeTable(kv_array) {
+    var data = "";
+    for (var i=0; i<kv_array.length; i++) {
+        data += "<tr><th>" + kv_array[i].key + "</th><td>" + kv_array[i].value + "</td></tr>";
+    }
+    return "<table>" + data + "</table>";
+}
+
+function getFullBox(payload) {
+    return {
+        version: payload.readUIntBE(0, 1),
+        flag: payload.readUIntBE(1, 3),
+        size: 4
+    };
+}
+
 module.exports.outputHex = function(payload) {
     var str = "";
     var i = 0;
@@ -10,39 +28,41 @@ module.exports.outputHex = function(payload) {
 };
 
 module.exports.parseFileTypeBox = function(payload) {
-    const major_brand = payload.slice(0, 4).toString('ascii');
-    const minor_version = payload.readUIntBE(4, 4);
-    const compatible_brands = payload.slice(8, 12).toString('ascii');
+    const kv_array = [
+        {key: "Major Brand", value: payload.slice(0, 4).toString('ascii')},
+        {key: "Minor Version", value: payload.readUIntBE(4, 4)},
+        {key: "Compatible Brands", value: payload.slice(8, 12).toString('ascii')}
+    ];
 
-    return "<table><tr><th>Major Brand</th><td>" + major_brand + "</td></tr>"
-    + "<tr><th>Minor Version</th><td>" + minor_version + "</td></tr>"
-    + "<tr><th>Compatible Brands</th><td>" + compatible_brands + "</td></tr>"
-    + "</table>";
+    return makeTable(kv_array);
 };
 
 module.exports.parseHeader = function(payload) {
-    const version = 1;  // TODO: get from ftyp box
-
-    var creation_time, modification_time, timescale, duration;
-    if (version == 1) {
-        creation_time = payload.readUIntBE(0, 8);
-        modification_time = payload.readUIntBE(8, 8);
-        timescale = payload.readUIntBE(16, 4);
-        duration = payload.readUIntBE(20, 8);
+    var offset, creation_time, modification_time, timescale, duration;
+    const fullbox = getFullBox(payload);
+    var kv_array = [
+        {key: "Version", value: fullbox.version},
+        {key: "flag", value: fullbox.flag}
+    ];
+    if (fullbox.version == 1) {
+        kv_array = kv_array.concat([
+            {key: "Creation Time", value: bigInt.getBigint(payload.readUIntBE(4, 4), payload.readUIntBE(0, 4)).toString()},
+            {key: "Modification Time", value: bigInt.getBigint(payload.readUIntBE(12, 4), payload.readUIntBE(8, 4)).toString()},
+            {key: "Timescale", value: payload.readUIntBE(16, 4)},
+            {key: "Duration", value: bigInt.getBigint(payload.readUIntBE(24, 4), payload.readUIntBE(20, 4)).toString()}
+        ]);
+        offset = 28
     } else {  // if (version == 0)
-        creation_time = payload.readUIntBE(0, 4);
-        modification_time = payload.readUIntBE(4, 4);
-        timescale = payload.readUIntBE(8, 4);
-        duration = payload.readUIntBE(12, 4);
+        kv_array = kv_array.concat([
+            {key: "Creation Time", value: payload.readUIntBE(4, 4)},
+            {key: "Modification Time", value: payload.readUIntBE(8, 4)},
+            {key: "Timescale", value: payload.readUIntBE(12, 4)},
+            {key: "Duration", value: payload.readUIntBE(16, 4)}
+        ]);
+        offset = 20
     }
     // TODO: version によってオフセットが変わる
 //    const rate = payload.readIntBE()
 
-    var str = "<table><tr><th>Creation Time</th><td>" + creation_time + "</td></tr>"
-    + "<tr><th>Modification Time</th><td>" + modification_time + "</td></tr>"
-    + "<tr><th>Timescale</th><td>" + timescale + "</td></tr>"
-    + "<tr><th>Duration</th><td>" + duration + "</td></tr>"
-    + "</table>";
-
-    return str;
+    return makeTable(kv_array);
 }
