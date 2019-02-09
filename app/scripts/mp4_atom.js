@@ -29,7 +29,7 @@ module.exports.atom = {
     tkhd: {
         description: "track header, overall information about the track",
         hasChild: false,
-        display: atom_view.outputHex
+        display: atom_view.parseTrackHeaderBox
     },
     tref: {
         description: "track reference container",
@@ -54,7 +54,7 @@ module.exports.atom = {
     mdhd: {
         description: "media header, overall information about the media",
         hasChild: false,
-        display: atom_view.outputHex
+        display: atom_view.parseMediaHeaderBox
     },
     hdlr: {
         description: "handler, declares the media (handler) type",
