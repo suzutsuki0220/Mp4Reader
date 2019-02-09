@@ -21,7 +21,7 @@ function convert2epocString(creation_time) {
     const DIFFERENCE = 2082844800;  /* seconds between 1904-01-01 and Epoch */
     const epoc = creation_time >= DIFFERENCE ? creation_time - DIFFERENCE : creation_time;
 
-    return dateTime.toString(epoc * 1000);
+    return dateTime.toUTCString(epoc * 1000);
 }
 
 function getLanguageString(int5x3) {
