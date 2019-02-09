@@ -19,7 +19,7 @@ module.exports.atom = {
     mvhd: {
         description: "movie header, overall declarations",
         hasChild: false,
-        display: atom_view.parseHeader
+        display: atom_view.parseMovieHeaderBox
     },
     trak: {
         description: "container for an individual track or stream",

@@ -1,4 +1,5 @@
 const bigInt = require('./bigint');
+const dateTime = require('js-utils').datetime;
 
 function makeTable(kv_array) {
     var data = "";
@@ -14,6 +15,11 @@ function getFullBox(payload) {
         flag: payload.readUIntBE(1, 3),
         size: 4
     };
+}
+
+function convert2epoc(creation_time) {
+    const DIFFERENCE = 2082844800;  /* seconds between 1904-01-01 and Epoch */
+    return creation_time >= DIFFERENCE ? creation_time - DIFFERENCE : creation_time;
 }
 
 module.exports.outputHex = function(payload) {
@@ -37,12 +43,11 @@ module.exports.parseFileTypeBox = function(payload) {
     return makeTable(kv_array);
 };
 
-module.exports.parseHeader = function(payload) {
+module.exports.parseMovieHeaderBox = function(payload) {
     var offset, creation_time, modification_time, timescale, duration;
     const fullbox = getFullBox(payload);
     var kv_array = [
-        {key: "Version", value: fullbox.version},
-        {key: "flag", value: fullbox.flag}
+        {key: "Version", value: fullbox.version}
     ];
     if (fullbox.version == 1) {
         kv_array = kv_array.concat([
@@ -54,15 +59,19 @@ module.exports.parseHeader = function(payload) {
         offset = 28
     } else {  // if (version == 0)
         kv_array = kv_array.concat([
-            {key: "Creation Time", value: payload.readUIntBE(4, 4)},
-            {key: "Modification Time", value: payload.readUIntBE(8, 4)},
+            {key: "Creation Time", value: dateTime.toString(convert2epoc(payload.readUIntBE(4, 4)) * 1000)},
+            {key: "Modification Time", value: dateTime.toString(convert2epoc(payload.readUIntBE(8, 4)) * 1000)},
             {key: "Timescale", value: payload.readUIntBE(12, 4)},
             {key: "Duration", value: payload.readUIntBE(16, 4)}
         ]);
         offset = 20
     }
-    // TODO: version によってオフセットが変わる
-//    const rate = payload.readIntBE()
+    kv_array = kv_array.concat([
+        {key: "Rate", value: payload.readUIntBE(offset, 4)},
+        {key: "Volume", value: payload.readUIntBE(offset+4, 2)},
+        /* reserved(0): 10, display_matrix[4*9]: 36, predefined: 24 */
+        {key: "Next Track ID", value: payload.readUIntBE(offset+76, 4)}
+    ])
 
     return makeTable(kv_array);
 }
