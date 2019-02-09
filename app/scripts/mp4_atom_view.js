@@ -17,9 +17,11 @@ function getFullBox(payload) {
     };
 }
 
-function convert2epoc(creation_time) {
+function convert2epocString(creation_time) {
     const DIFFERENCE = 2082844800;  /* seconds between 1904-01-01 and Epoch */
-    return creation_time >= DIFFERENCE ? creation_time - DIFFERENCE : creation_time;
+    const epoc = creation_time >= DIFFERENCE ? creation_time - DIFFERENCE : creation_time;
+
+    return dateTime.toString(epoc * 1000);
 }
 
 module.exports.outputHex = function(payload) {
@@ -44,27 +46,27 @@ module.exports.parseFileTypeBox = function(payload) {
 };
 
 module.exports.parseMovieHeaderBox = function(payload) {
-    var offset;
     const fullbox = getFullBox(payload);
+    var offset = fullbox.size;
     var kv_array = [
         {key: "Version", value: fullbox.version}
     ];
     if (fullbox.version == 1) {
         kv_array = kv_array.concat([
-            {key: "Creation Time", value: bigInt.getBigint(payload.readUIntBE(4, 4), payload.readUIntBE(0, 4)).toString()},
-            {key: "Modification Time", value: bigInt.getBigint(payload.readUIntBE(12, 4), payload.readUIntBE(8, 4)).toString()},
-            {key: "Timescale", value: payload.readUIntBE(16, 4)},
-            {key: "Duration", value: bigInt.getBigint(payload.readUIntBE(24, 4), payload.readUIntBE(20, 4)).toString()}
+            {key: "Creation Time", value: bigInt.getBigint(payload.readUIntBE(offset+4, 4), payload.readUIntBE(offset+0, 4)).toString()},
+            {key: "Modification Time", value: bigInt.getBigint(payload.readUIntBE(offset+12, 4), payload.readUIntBE(offset+8, 4)).toString()},
+            {key: "Timescale", value: payload.readUIntBE(offset+16, 4)},
+            {key: "Duration", value: bigInt.getBigint(payload.readUIntBE(offset+24, 4), payload.readUIntBE(offset+20, 4)).toString()}
         ]);
-        offset = 28
+        offset += 28
     } else {  // if (version == 0)
         kv_array = kv_array.concat([
-            {key: "Creation Time", value: dateTime.toString(convert2epoc(payload.readUIntBE(4, 4)) * 1000)},
-            {key: "Modification Time", value: dateTime.toString(convert2epoc(payload.readUIntBE(8, 4)) * 1000)},
-            {key: "Timescale", value: payload.readUIntBE(12, 4)},
-            {key: "Duration", value: payload.readUIntBE(16, 4)}
+            {key: "Creation Time", value: convert2epocString(payload.readUIntBE(offset+0, 4))},
+            {key: "Modification Time", value: convert2epocString(payload.readUIntBE(offset+4, 4))},
+            {key: "Timescale", value: payload.readUIntBE(offset+8, 4)},
+            {key: "Duration", value: payload.readUIntBE(offset+12, 4)}
         ]);
-        offset = 20
+        offset += 16
     }
     kv_array = kv_array.concat([
         {key: "Rate", value: payload.readUIntBE(offset, 4)},
