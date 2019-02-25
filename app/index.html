@@ -1,39 +1,55 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="utf-8">
-<script type="text/javascript" src="./scripts/mp4_reader.js"></script>
-<meta http-equiv="Content-Script-Type" content="text/javascript">
-<meta http-equiv="Content-Style-Type" content="text/css">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="./stylesheets/main.css">
-<link rel="stylesheet" type="text/css" href="./stylesheets/mp4reader.css">
-<title></title>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="./main.js"></script>
+    <script type="text/javascript" src="./scripts/mp4_reader.js"></script>
+    <meta http-equiv="Content-Script-Type" content="text/javascript">
+    <meta http-equiv="Content-Style-Type" content="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="./stylesheets/mp4reader.css">
+    <title></title>
 </head>
 <body>
-<p>MP4 reader</p>
-<form name="f1">
-    <div class="level-item">
-        <p class="subtitle is-5">
-            File:
-        </p>
-        <p class="control">
-            <input type="text" class="input" name="data_path" size="100" placeholder="MPEG4 file">
-        </p>
-        <p class="control">
-            <input type="button" class="button" name="btn_open_file_dialog" value="📁" onClick="openFileDialog()">
-        </p>
+    <section class="hero is-link">
+        <div class="hero-info">MP4 reader</div>
+    </section>
+    <form name="f1">
+        <div class="field is-horizontal">
+            <div class="field-label is-normal">
+                <label class="label">File:</label>
+            </div>
+            <div class="field-body">
+                <div class="field">
+                    <div class="control">
+                        <div class="file has-name is-fullwidth">
+                            <label class="file-label">
+                                <input class="file-input" type="file" name="data_path">
+                                <span class="file-cta" onClick="openFileDialog()">
+                                    <span clas="file-icon">
+                                        <i class="fas fa-upload"></i>
+                                    </span>
+                                    <span class="file-label">
+                                        Choose a file...
+                                    </span>
+                                </span>
+                                <input type="text" class="input" id="data_path" size="100" placeholder="MPEG4 file">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="container">
+        <div class="box-left">
+            ATOM構造<br><span id="structure"></span>
+        </div>
+        <div class="box-right">
+            Payload<br><span id="payload"></span>
+        </div>
+        <div class="clear"></div>
     </div>
-</form>
-<div class="container">
-<div class="box-left">
-ATOM構造<br><span id="structure"></span>
-</div>
-<div class="box-right">
-Payload<br><span id="payload"></span>
-</div>
-<div class="clear"></div>
-</div>
-<div id="load_status"></div>
+    <div id="load_status"></div>
 </body>
 </html>

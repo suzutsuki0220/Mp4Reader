@@ -16,7 +16,7 @@ function openFileDialog() {
         ]});
 
     if (filenames && filenames.length > 0) {
-        document.f1.data_path.value = filenames[0];
+        document.getElementById('data_path').value = filenames[0];
         readfile.load(filenames[0], output);
     }
 }
