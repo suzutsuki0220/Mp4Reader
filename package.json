@@ -7,19 +7,29 @@
   "scripts": {
     "css-build": "node-sass _sass/main.scss app/stylesheets/main.css",
     "start": "./node_modules/.bin/electron .",
-    "test": "./node_modules/.bin/jest"
+    "test": "./node_modules/.bin/jest",
+    "webpack": "npx webpack --mode production",
+    "webpack-dev": "npx webpack"
   },
   "author": "suzutsuki0220",
   "license": "MIT",
   "dependencies": {
     "big-integer": "^1.6.42",
     "electron": "^3.1.4",
-    "js-utils": "git+https://github.com/suzutsuki0220/jsUtils.git"
+    "js-utils": "git+https://github.com/suzutsuki0220/jsUtils.git",
+    "webpack": "^4.29.5",
+    "webpack-cli": "^3.2.3"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.7.2",
     "bulma": "^0.7.4",
+    "css-loader": "^2.1.0",
+    "extract-text-webpack-plugin": "^3.0.2",
     "jest": "^23.6.0",
-    "node-sass": "^4.11.0"
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "url-loader": "^1.1.2"
   },
   "jest": {
     "testEnvironment": "node"
