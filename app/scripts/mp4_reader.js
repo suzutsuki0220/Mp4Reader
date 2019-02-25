@@ -61,7 +61,7 @@ function makePayloadElem(atom) {
         elem += " (" + mp4Atom.atom[type].description + ')<br><hr>';
         elem += mp4Atom.atom[type].display(atom.payload);
     } else {
-        elem += 'unknown data';
+        elem += '<br><hr>unknown data';
     }
 
     return elem;
