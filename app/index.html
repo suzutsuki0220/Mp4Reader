@@ -15,16 +15,14 @@
         <div class="hero-info">MP4 reader</div>
     </section>
     <form name="f1">
-        <div class="field is-horizontal">
-            <div class="field-label is-normal">
-                <label class="label">File:</label>
-            </div>
+        <div class="field">
             <div class="field-body">
                 <div class="field">
                     <div class="control">
                         <div class="file has-name is-fullwidth">
                             <label class="file-label">
                                 <input class="file-input" type="file" name="data_path">
+                                <input type="text" class="input" id="data_path" placeholder="MPEG4 file">
                                 <span class="file-cta" onClick="openFileDialog()">
                                     <span clas="file-icon">
                                         <i class="fas fa-upload"></i>
@@ -33,7 +31,6 @@
                                         Choose a file...
                                     </span>
                                 </span>
-                                <input type="text" class="input" id="data_path" size="100" placeholder="MPEG4 file">
                             </label>
                         </div>
                     </div>
@@ -41,7 +38,7 @@
             </div>
         </div>
     </form>
-    <div class="container">
+    <div class="box-area">
         <div class="box-left">
             ATOM構造<br><span id="structure"></span>
         </div>
