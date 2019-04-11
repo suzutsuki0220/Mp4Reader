@@ -55,13 +55,14 @@ function makePayloadElem(atom) {
     const type = atom.type;
     const payload = atom.payload;
 
-    var elem = "";
-    elem += atom.type;
+    var elem = new Object();
+    elem.title = atom.type;
     if (mp4Atom.atom[type]) {
-        elem += " (" + mp4Atom.atom[type].description + ')<br><hr>';
-        elem += mp4Atom.atom[type].display(atom.payload);
+        elem.description = mp4Atom.atom[type].description;
+        elem.preview = mp4Atom.atom[type].display(atom.payload);
     } else {
-        elem += '<br><hr>unknown data';
+        elem.description = '';
+        elem.preview = 'unknown atom type';
     }
 
     return elem;

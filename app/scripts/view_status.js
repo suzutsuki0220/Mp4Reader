@@ -11,6 +11,8 @@ module.exports.setStructure = function(structure) {
     document.getElementById('payload').innerHTML = "";
 };
 
-module.exports.setPayload = function(message) {
-    document.getElementById('payload').innerHTML = message;
+module.exports.setPayload = function(payload) {
+    document.getElementById('payload_title').innerHTML = payload.title
+    document.getElementById('payload_description').innerHTML = payload.description
+    document.getElementById('payload').innerHTML = payload.preview;
 };
