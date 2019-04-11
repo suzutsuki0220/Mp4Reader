@@ -34,17 +34,6 @@ function getLanguageString(int5x3) {
     return String.fromCharCode(b[0], b[1], b[2]);
 }
 
-module.exports.outputHex = function(payload) {
-    var str = "";
-    var i = 0;
-    while (i < payload.length) {
-        str += str ? " " : "";
-        str += payload.toString('hex', i, i+1);
-        i++;
-    }
-    return str;
-};
-
 module.exports.parseFileTypeBox = function(payload) {
     const kv_array = [
         {key: "Major Brand", value: payload.slice(0, 4).toString('ascii')},

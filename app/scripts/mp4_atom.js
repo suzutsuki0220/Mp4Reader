@@ -1,3 +1,4 @@
+const hex = require('./hex')
 const atom_view = require('./mp4_atom_view')
 
 module.exports.atom = {
@@ -9,12 +10,12 @@ module.exports.atom = {
     pdin: {
         description: "progressive download information",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     moov: {
         description: "container for all the metadata",
         hasChild: true,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     mvhd: {
         description: "movie header, overall declarations",
@@ -24,7 +25,7 @@ module.exports.atom = {
     trak: {
         description: "container for an individual track or stream",
         hasChild: true,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     tkhd: {
         description: "track header, overall information about the track",
@@ -34,22 +35,22 @@ module.exports.atom = {
     tref: {
         description: "track reference container",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     edts: {
         description: "edit list container",
         hasChild: true,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     elst: {
         description: "an edit list",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     mdia: {
         description: "container for the media information in a track",
         hasChild: true,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     mdhd: {
         description: "media header, overall information about the media",
@@ -59,306 +60,306 @@ module.exports.atom = {
     hdlr: {
         description: "handler, declares the media (handler) type",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     minf: {
         description: "media information container",
         hasChild: true,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     vmhd: {
         description: "video media header, overall information (video track only)",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     smhd: {
         description: "sound media header, overall information (sound track only)",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     hmhd: {
         description: "hint media header, overall information (hint track only)",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     nmhd: {
         description: "Null media header, overall information (some tracks only)",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     dinf: {
         description: "data information box, container",
         hasChild: true,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     dref: {
         description: "data reference box, declares source(s) of media data in track",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     stbl: {
         description: "sample table box, container for the time/space map",
         hasChild: true,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     stsd: {
         description: "sample descriptions (codec types, initialization etc.)",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     stts: {
         description: "(decoding) time-to-sample",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     ctts: {
         description: "(composition) time to sample",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     stsc: {
         description: "sample-to-chunk, partial data-offset information",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     stsz: {
         description: "sample sizes (framing)",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     stz2: {
         description: "compact sample sizes (framing)",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     stco: {
         description: "chunk offset, partial data-offset information",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     co64: {
         description: "64-bit chunk offset",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     stss: {
         description: "sync sample table (random access points)",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     stsh: {
         description: "shadow sync sample table",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     padb: {
         description: "sample padding bits",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     stdp: {
         description: "sample degradation priority",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     sdtp: {
         description: "independent and disposable samples",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     sbgp: {
         description: "sample-to-group",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     sgpd: {
         description: "sample group description",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     subs: {
         description: "sub-sample information",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     mvex: {
         description: "movie extends box",
         hasChild: true,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     mehd: {
         description: "movie extends header box",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     trex: {
         description: "track extends defaults",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     ipmc: {
         description: "IPMP Control Box",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     moof: {
         description: "movie fragment",
         hasChild: true,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     mfhd: {
         description: "movie fragment header",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     traf: {
         description: "track fragment",
         hasChild: true,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     tfhd: {
         description: "track fragment header",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     trun: {
         description: "track fragment run",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     sdtp: {
         description: "independent and disposable samples",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     sbgp: {
         description: "sample-to-group",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     subs: {
         description: "sub-sample information",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     mfra: {
         description: "movie fragment random access",
         hasChild: true,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     tfra: {
         description: "track fragment random access",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     mfro: {
         description: "movie fragment random access offset",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     mdat: {
         description: "media data container",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     free: {
         description: "free space",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     skip: {
         description: "free space",
         hasChild: true,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     udta: {
         description: "User data",
         hasChild: true,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     cprt: {
         description: "copyright etc.",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     meta: {
         description: "metadata",
         hasChild: true,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     hdlr: {
         description: "handler, declares the metadata (handler) type",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     dinf: {
         description: "data information box, container",
         hasChild: true,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     dref: {
         description: "data reference box, declares source(s) of metadata items",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     ipmc: {
         description: "IPMP Control Box",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     iloc: {
         description: "item location",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     ipro: {
         description: "item protection",
         hasChild: true,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     sinf: {
         description: "protection scheme information box",
         hasChild: true,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     frma: {
         description: "original format box",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     imif: {
         description: "IPMP Information box",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     schm: {
         description: "scheme type box",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     schi: {
         description: "scheme information box",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     iinf: {
         description: "item information",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     xml: {
         description: "XML container",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     bxml: {
         description: "binary XML container",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     },
     pitm: {
         description: "primary item reference",
         hasChild: false,
-        display: atom_view.outputHex
+        display: hex.outputHex
     }
 };
