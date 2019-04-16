@@ -21,11 +21,24 @@ function openFileDialog() {
     }
 }
 
+function makeAtomListId(index_array) {
+    return 'atom_item' + index_array.toString().replace(/,/g, '-');
+}
+
+function activeListItem(index_array) {
+    const list_items = document.getElementsByClassName('atom_list');
+    for (var i=0; i<list_items.length; i++) {
+        list_items[i].style.backgroundColor = '';
+    }
+
+    document.getElementById(makeAtomListId(index_array)).style = "background: hsl(0, 0%, 96%);";
+}
+
 function outputChild(data) {
     var tag = "";
     tag += '<ul>';
     for (var i=0; i<data.length; i++) {
-        tag += '<li>';
+        tag += '<li id="' + makeAtomListId(data[i].index) + '" class="atom_list">';
         tag += '<a href="javascript:showPayload([' + data[i].index.toString() + '])">' + data[i].type + '</a>';
         tag += ' (' + data[i].size + ')</li>';
         if (data[i].children.length !== 0) {
@@ -75,5 +88,6 @@ function showPayload(index) {
         get_atom = get_atom.children[index[i]];
     }
 
+    activeListItem(index);
     viewStatus.setPayload(makePayloadElem(get_atom));
 }
