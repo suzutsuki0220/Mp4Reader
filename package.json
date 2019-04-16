@@ -14,16 +14,16 @@
   "author": "suzutsuki0220",
   "license": "MIT",
   "dependencies": {
-    "big-integer": "^1.6.42",
-    "electron": "^3.1.4",
+    "big-integer": "^1.6.43",
+    "electron": "^3.1.8",
     "js-utils": "git+https://github.com/suzutsuki0220/jsUtils.git",
-    "webpack": "^4.29.5",
-    "webpack-cli": "^3.2.3"
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0"
   },
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "^5.7.2",
+    "@fortawesome/fontawesome-free": "^5.8.1",
     "bulma": "^0.7.4",
-    "css-loader": "^2.1.0",
+    "css-loader": "^2.1.1",
     "extract-text-webpack-plugin": "^3.0.2",
     "jest": "^23.6.0",
     "node-sass": "^4.11.0",
