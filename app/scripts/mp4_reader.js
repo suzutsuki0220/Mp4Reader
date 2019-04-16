@@ -1,8 +1,10 @@
+const hex = require('./scripts/hex');
 const readfile = require('./scripts/read_file');
 const viewStatus = require('./scripts/view_status');
 const mp4Atom = require('./scripts/mp4_atom');
 
 var mp4data;
+var selected_atom = {type: '', payload: ''};
 
 function openFileDialog() {
     const dialog = require('electron').remote.dialog;
@@ -64,21 +66,33 @@ function output(atoms) {
     viewStatus.setStructure(str);
 }
 
+function switchPayloadViewMode(selected) {
+    document.getElementById('payload_view_preview').classList.remove('is-active');
+    document.getElementById('payload_view_hex').classList.remove('is-active');
+
+    document.getElementById(selected).classList.add('is-active');
+    viewStatus.setPayload(makePayloadElem(selected_atom));
+}
+
+function makeDisplay(type, payload) {
+    if (document.getElementById('payload_view_preview').classList.contains('is-active')) {
+        return mp4Atom.atom[type] ? mp4Atom.atom[type].display(payload) : 'unknown atom type';
+    } else if (document.getElementById('payload_view_hex').classList.contains('is-active')) {
+        return hex.outputHex(payload);
+    } else {
+        return "missing preview mode";
+    }
+}
+
 function makePayloadElem(atom) {
     const type = atom.type;
     const payload = atom.payload;
 
-    var elem = new Object();
-    elem.title = atom.type;
-    if (mp4Atom.atom[type]) {
-        elem.description = mp4Atom.atom[type].description;
-        elem.preview = mp4Atom.atom[type].display(atom.payload);
-    } else {
-        elem.description = '';
-        elem.preview = 'unknown atom type';
-    }
-
-    return elem;
+    return {
+        title:       type,
+        description: mp4Atom.atom[type] ? mp4Atom.atom[type].description : '',
+        preview:     makeDisplay(type, atom.payload)
+    };
 }
 
 function showPayload(index) {
@@ -88,6 +102,7 @@ function showPayload(index) {
         get_atom = get_atom.children[index[i]];
     }
 
+    selected_atom = get_atom;
     activeListItem(index);
     viewStatus.setPayload(makePayloadElem(get_atom));
 }
