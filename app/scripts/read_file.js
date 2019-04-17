@@ -4,6 +4,8 @@
 const fs = require('fs');
 const mp4Atom = require('./mp4_atom');
 
+var load_name = '';
+
 function hasChildAtom(type) {
     for (var atom in mp4Atom.atom) {
         if (atom === type) {
@@ -63,4 +65,9 @@ module.exports.load = function(filename, callback) {
     };
 
     fs.readFile(filename, afterReadWork);
+    load_name = filename;
+};
+
+module.exports.getFileName = function() {
+    return load_name;
 };

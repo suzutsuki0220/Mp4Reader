@@ -1,3 +1,4 @@
+const file = require('js-utils').file;
 const hex = require('./scripts/hex');
 const readfile = require('./scripts/read_file');
 const viewStatus = require('./scripts/view_status');
@@ -103,4 +104,11 @@ function showPayload(index) {
     selected_atom = get_atom;
     activeListItem(index);
     viewStatus.setPayload(makePayloadElem(get_atom));
+}
+
+function downloadAtom() {
+    const path = require('path');
+    const filename = path.basename(readfile.getFileName()) + "." + selected_atom.type + ".bin";
+
+    file.saveBlob(selected_atom.payload, filename);
 }
