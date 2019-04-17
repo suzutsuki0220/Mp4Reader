@@ -80,13 +80,12 @@ function makeDisplay(type, payload) {
     } else if (document.getElementById('payload_view_hex').classList.contains('is-active')) {
         return hex.outputHex(payload);
     } else {
-        return "missing preview mode";
+        return 'missing preview mode';
     }
 }
 
 function makePayloadElem(atom) {
     const type = atom.type;
-    const payload = atom.payload;
 
     return {
         title:       type,
@@ -96,7 +95,6 @@ function makePayloadElem(atom) {
 }
 
 function showPayload(index) {
-    var i = 0;
     var get_atom = mp4data[index[0]];
     for (var i=1; i<index.length; i++) {
         get_atom = get_atom.children[index[i]];
