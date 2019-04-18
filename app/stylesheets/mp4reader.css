@@ -29,3 +29,7 @@ html, body {
 .clear {
     clear: both;
 }
+
+.monospace {
+    font-family: "Courier New", Consolas, monospace;
+}
