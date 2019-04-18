@@ -1,5 +1,5 @@
 const bigInt = require('./bigint');
-const dateTime = require('js-utils').datetime;
+const decode = require('./decode');
 
 function makeTable(kv_array) {
     var data = "";
@@ -15,23 +15,6 @@ function getFullBox(payload) {
         flag: payload.readUIntBE(1, 3),
         size: 4
     };
-}
-
-function convert2epocString(creation_time) {
-    const DIFFERENCE = 2082844800;  /* seconds between 1904-01-01 and Epoch */
-    const epoc = creation_time >= DIFFERENCE ? creation_time - DIFFERENCE : creation_time;
-
-    return dateTime.toUTCString(epoc * 1000);
-}
-
-function getLanguageString(int5x3) {
-    const CONST_SMALL_A = 0x60;
-    const b = new Array(
-        (int5x3 >> 10 & 0b11111) + CONST_SMALL_A,
-        (int5x3 >>  5 & 0b11111) + CONST_SMALL_A,
-        (int5x3 & 0b11111) + CONST_SMALL_A
-    );
-    return String.fromCharCode(b[0], b[1], b[2]);
 }
 
 module.exports.parseFileTypeBox = function(payload) {
@@ -60,8 +43,8 @@ module.exports.parseMovieHeaderBox = function(payload) {
         offset += 28
     } else {  // if (version == 0)
         kv_array = kv_array.concat([
-            {key: "Creation Time", value: convert2epocString(payload.readUIntBE(offset+0, 4))},
-            {key: "Modification Time", value: convert2epocString(payload.readUIntBE(offset+4, 4))},
+            {key: "Creation Time", value: decode.dateTime(payload, offset)},
+            {key: "Modification Time", value: decode.dateTime(payload, offset+4)},
             {key: "Timescale", value: payload.readUIntBE(offset+8, 4)},
             {key: "Duration", value: payload.readUIntBE(offset+12, 4)}
         ]);
@@ -94,8 +77,8 @@ module.exports.parseTrackHeaderBox = function(payload) {
         offset += 32
     } else {  // if (version == 0)
         kv_array = kv_array.concat([
-            {key: "Creation Time", value: convert2epocString(payload.readUIntBE(offset+0, 4))},
-            {key: "Modification Time", value: convert2epocString(payload.readUIntBE(offset+4, 4))},
+            {key: "Creation Time", value: decode.dateTime(payload, offset)},
+            {key: "Modification Time", value: decode.dateTime(payload, offset+4)},
             {key: "Track ID", value: payload.readUIntBE(offset+8, 4)},
             /* reserved: 4 */
             {key: "Duration", value: payload.readUIntBE(offset+16, 4)}
@@ -130,15 +113,15 @@ module.exports.parseMediaHeaderBox = function(payload) {
         offset += 28
     } else {  // if (version == 0)
         kv_array = kv_array.concat([
-            {key: "Creation Time", value: convert2epocString(payload.readUIntBE(offset+0, 4))},
-            {key: "Modification Time", value: convert2epocString(payload.readUIntBE(offset+4, 4))},
+            {key: "Creation Time", value: decode.dateTime(payload, offset)},
+            {key: "Modification Time", value: decode.dateTime(payload, offset+4)},
             {key: "Time Scale", value: payload.readUIntBE(offset+8, 4)},
             {key: "Duration", value: payload.readUIntBE(offset+12, 4)}
         ]);
         offset += 16
     }
     kv_array = kv_array.concat([
-        {key: "Language", value: getLanguageString(payload.readUIntBE(offset, 2))},
+        {key: "Language", value: decode.languageString(payload, offset)},
         {key: "Quality", value: payload.readUIntBE(offset+2, 2)}
     ])
 
