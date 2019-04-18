@@ -3,16 +3,12 @@
 
 const fs = require('fs');
 const mp4Atom = require('./mp4_atom');
+const decode = require('./decode');
 
 var load_name = '';
 
 function hasChildAtom(type) {
-    for (var atom in mp4Atom.atom) {
-        if (atom === type) {
-            return mp4Atom.atom[atom].hasChild;
-        }
-    }
-    return false;
+    return mp4Atom.atom[type] ? mp4Atom.atom[type].hasChild : false;
 }
 
 function getChildAtom(mp4data, atom, index) {
@@ -35,13 +31,13 @@ function getAtom(mp4data, offset, index) {
     let atom = {
         index: index,  // 出現する順序
         size: size,
-        type: buf.toString('ascii', 4, 8),
+        type: decode.typeString(buf, 4),
         maybe_broken: size > buf.length ? true : false,
+        children: [],
         payload_position: offset + 8,
         payload: buf.slice(8, size)
     };
 
-    atom.children = new Array();
     if (hasChildAtom(atom.type) === true) {
         getChildAtom(mp4data, atom, index);
     }
