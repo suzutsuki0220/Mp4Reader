@@ -7,6 +7,22 @@ const decode = require('./decode');
 
 var load_name = '';
 
+// atom先頭のsizeが正しくない時は代替えの値を返す
+function getValidSize(buf) {
+    const size = buf.readUIntBE(0, 4);
+    if (size > buf.length || size < 8) { // size値がbufferサイズを超えているか、size + type 分のサイズが無い場合は異常値
+        return {
+            byte: buf.length,
+            broken: true
+        };
+    }
+
+    return {
+        byte: size,
+        broken: false
+    };
+}
+
 function hasChildAtom(type) {
     return mp4Atom.atom[type] ? mp4Atom.atom[type].hasChild : false;
 }
@@ -27,15 +43,15 @@ function getChildAtom(mp4data, atom, index) {
 function getAtom(mp4data, offset, index) {
     const buf = mp4data.slice(offset);
 
-    const size = buf.readUIntBE(0, 4);
+    const size = getValidSize(buf);
     let atom = {
         index: index,  // 出現する順序
-        size: size,
+        size: size.byte,
         type: decode.typeString(buf, 4),
-        maybe_broken: size > buf.length ? true : false,
+        maybe_broken: size.broken,
         children: [],
         payload_position: offset + 8,
-        payload: buf.slice(8, size)
+        payload: buf.slice(8, size.byte)
     };
 
     if (hasChildAtom(atom.type) === true) {

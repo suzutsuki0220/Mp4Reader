@@ -87,12 +87,17 @@ function makeDisplay(type, payload) {
 
 function makePayloadElem(atom) {
     const type = atom.type;
+    const broken_notice = atom.maybe_broken ? makeBrokenNotice() : '';
 
     return {
         title:       type,
         description: mp4Atom.atom[type] ? mp4Atom.atom[type].description : '',
-        preview:     makeDisplay(type, atom.payload)
+        preview:     broken_notice + makeDisplay(type, atom.payload)
     };
+}
+
+function makeBrokenNotice() {
+    return "<p class='notification is-danger'><i class='fas fa-exclamation-triangle'></i> selected atom may be damaged</p>";
 }
 
 function showPayload(index) {
