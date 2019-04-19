@@ -70,17 +70,17 @@ module.exports.atom = {
     vmhd: {
         description: "video media header, overall information (video track only)",
         hasChild: false,
-        display: hex.outputHex
+        display: atom_view.parseVideoMediaHeaderBox
     },
     smhd: {
         description: "sound media header, overall information (sound track only)",
         hasChild: false,
-        display: hex.outputHex
+        display: atom_view.parseSoundMediaHeaderBox
     },
     hmhd: {
         description: "hint media header, overall information (hint track only)",
         hasChild: false,
-        display: hex.outputHex
+        display: atom_view.parseHintMediaHeaderBox
     },
     nmhd: {
         description: "Null media header, overall information (some tracks only)",

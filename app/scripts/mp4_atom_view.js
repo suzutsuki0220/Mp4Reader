@@ -157,3 +157,46 @@ module.exports.parseHandlerReferenceBox = function(payload) {
 
     return makeTable(kv_array);
 }
+
+module.exports.parseVideoMediaHeaderBox = function(payload) {
+    const fullbox = getFullBox(payload);
+    var offset = fullbox.size;
+    var kv_array = [
+        {key: "Version", value: fullbox.version}
+    ];
+    kv_array = kv_array.concat([
+        {key: "Graphicsmode", value: payload.readUIntBE(offset, 2)},
+        {key: "Opcolor", value: "{" + payload.readUIntBE(offset+2, 2) + ", " + payload.readUIntBE(offset+4, 2) + ", " + payload.readUIntBE(offset+6, 2) + "}"}
+    ]);
+
+    return makeTable(kv_array);
+};
+
+module.exports.parseSoundMediaHeaderBox = function(payload) {
+    const fullbox = getFullBox(payload);
+    var offset = fullbox.size;
+    var kv_array = [
+        {key: "Version", value: fullbox.version}
+    ];
+    kv_array = kv_array.concat([
+        {key: "Balance", value: payload.readUIntBE(offset, 2)}
+    ]);
+
+    return makeTable(kv_array);
+}
+
+module.exports.parseHintMediaHeaderBox = function(payload) {
+    const fullbox = getFullBox(payload);
+    var offset = fullbox.size;
+    var kv_array = [
+        {key: "Version", value: fullbox.version}
+    ];
+    kv_array = kv_array.concat([
+        {key: "maxPDUsize", value: payload.readUIntBE(offset, 2)},
+        {key: "avgPDUsize", value: payload.readUIntBE(offset, 2)},
+        {key: "maxbitrate", value: payload.readUIntBE(offset, 4)},
+        {key: "avgbitrate", value: payload.readUIntBE(offset, 4)}
+    ]);
+
+    return makeTable(kv_array);
+}
