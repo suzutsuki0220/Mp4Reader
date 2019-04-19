@@ -1,10 +1,10 @@
-const dateTime = require('js-utils').datetime;
+const jsUtils = require('js-utils');
 
 function convert2epocString(creation_time) {
     const DIFFERENCE = 2082844800;  /* seconds between 1904-01-01 and Epoch */
     const epoc = creation_time >= DIFFERENCE ? creation_time - DIFFERENCE : creation_time;
 
-    return dateTime.toUTCString(epoc * 1000);
+    return jsUtils.datetime.toUTCString(epoc * 1000);
 }
 
 function getLanguageString(int5x3) {
@@ -18,7 +18,10 @@ function getLanguageString(int5x3) {
 }
 
 module.exports.typeString = function(buffer, offset) {
-    return buffer.toString('ascii', offset, offset+4);
+    return jsUtils.character.escapeControlChar(buffer.readUIntBE(offset, 1)) +
+           jsUtils.character.escapeControlChar(buffer.readUIntBE(offset+1, 1)) +
+           jsUtils.character.escapeControlChar(buffer.readUIntBE(offset+2, 1)) +
+           jsUtils.character.escapeControlChar(buffer.readUIntBE(offset+3, 1));
 };
 
 module.exports.dateTime = function(buffer, offset) {
