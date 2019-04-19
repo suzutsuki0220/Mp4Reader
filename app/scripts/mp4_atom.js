@@ -35,7 +35,7 @@ module.exports.atom = {
     tref: {
         description: "track reference container",
         hasChild: false,
-        display: hex.outputHex
+        display: atom_view.parseTrackReferenceBox
     },
     edts: {
         description: "edit list container",
@@ -60,7 +60,7 @@ module.exports.atom = {
     hdlr: {
         description: "handler, declares the media (handler) type",
         hasChild: false,
-        display: hex.outputHex
+        display: atom_view.parseHandlerReferenceBox
     },
     minf: {
         description: "media information container",
@@ -285,11 +285,6 @@ module.exports.atom = {
     meta: {
         description: "metadata",
         hasChild: true,
-        display: hex.outputHex
-    },
-    hdlr: {
-        description: "handler, declares the metadata (handler) type",
-        hasChild: false,
         display: hex.outputHex
     },
     dinf: {

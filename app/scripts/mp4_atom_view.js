@@ -129,3 +129,31 @@ module.exports.parseMediaHeaderBox = function(payload) {
 
     return makeTable(kv_array);
 }
+
+module.exports.parseTrackReferenceBox = function(payload) {
+    var kv_array = [];
+    for (var offset = 0; offset < payload.length; offset + 4) {
+        kv_array.push({
+            key: "track ID " + offset / 4,
+            value: payload.readUintBE(offset, 4)
+        });
+    }
+
+    return makeTable(kv_array);
+};
+
+module.exports.parseHandlerReferenceBox = function(payload) {
+    const fullbox = getFullBox(payload);
+    var offset = fullbox.size;
+    var kv_array = [
+        {key: "Version", value: fullbox.version}
+    ];
+    kv_array = kv_array.concat([
+        {key: "Pre Defined", value: payload.readUIntBE(offset, 4)},
+        {key: "Handler Type", value: payload.slice(offset+4, offset+8).toString('ascii')},
+        /* reserved 32 * 3 */
+        {key: "Name", value: payload.slice(offset+20).toString('ascii')}
+    ]);
+
+    return makeTable(kv_array);
+}
