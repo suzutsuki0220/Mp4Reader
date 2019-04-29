@@ -193,10 +193,93 @@ module.exports.parseHintMediaHeaderBox = function(payload) {
     ];
     kv_array = kv_array.concat([
         {key: "maxPDUsize", value: payload.readUIntBE(offset, 2)},
-        {key: "avgPDUsize", value: payload.readUIntBE(offset, 2)},
-        {key: "maxbitrate", value: payload.readUIntBE(offset, 4)},
-        {key: "avgbitrate", value: payload.readUIntBE(offset, 4)}
+        {key: "avgPDUsize", value: payload.readUIntBE(offset+2, 2)},
+        {key: "maxbitrate", value: payload.readUIntBE(offset+4, 4)},
+        {key: "avgbitrate", value: payload.readUIntBE(offset+8, 4)}
     ]);
+
+    return makeTable(kv_array);
+}
+
+module.exports.parseMovieFragmentHeaderBox = function(payload) {
+    const fullbox = getFullBox(payload);
+    var offset = fullbox.size;
+    var kv_array = [
+        {key: "Version", value: fullbox.version}
+    ];
+    kv_array = kv_array.concat([
+        {key: "Sequence Number", value: payload.readUIntBE(offset, 4)}
+    ]);
+
+    return makeTable(kv_array);
+}
+
+module.exports.parseTrackFragmentHeaderBox = function(payload) {
+    const fullbox = getFullBox(payload);
+    var offset = fullbox.size;
+    var kv_array = [
+        {key: "Version", value: fullbox.version}
+    ];
+    kv_array = kv_array.concat([
+        {key: "Track ID", value: payload.readUIntBE(offset, 4)}
+    ]);
+    if (payload.size >= 32) {  // optional fields
+        kv_array = kv_array.concat([
+            {key: "Base Data Offset", value: bigIntString(payload+4, offset)},
+            {key: "Sample Description Index", value: payload.readUIntBE(offset+12, 4)},
+            {key: "Default Sample Duration", value: payload.readUIntBE(offset+16, 4)},
+            {key: "Default Sample Size", value: payload.readUIntBE(offset+20, 4)},
+            {key: "Default Sample Flags", value: payload.readUIntBE(offset+24, 4)}
+        ]);
+    }
+
+    return makeTable(kv_array);
+}
+
+module.exports.parseTrackFragmentRunBox = function(payload) {
+    const fullbox = getFullBox(payload);
+    var offset = fullbox.size;
+    var kv_array = [
+        {key: "Version", value: fullbox.version}
+    ];
+    const sample_count = payload.readUIntBE(offset, 4);
+    kv_array = kv_array.concat([
+        {key: "Sample Count", value: sample_count},
+        {key: "Data Offset", value: payload.readIntBE(offset+4, 4)},   // optional
+        {key: "First Sample Flags", value: payload.readUIntBE(offset+8, 4)}   // optional
+    ]);
+    offset += 12;
+
+/* TODO: check tr_flags (fullbox.flag)
+    for (var i=0; i<3; i++) {
+        kv_array = kv_array.concat([
+            {key: i + " Sample Duration", value: payload.readUIntBE(offset, 4)},
+            {key: i + " Sample Size", value: payload.readUIntBE(offset+4, 4)},
+            {key: i + " Sample Flags", value: payload.readUIntBE(offset+8, 4)},
+            {key: i + " Sample Composition Time Offset", value: payload.readUIntBE(offset+12, 4)}
+        ]);
+        offset += 16;
+    }
+*/
+
+    return makeTable(kv_array);
+}
+
+module.exports.parseMovieExtendsHeaderBox = function(payload) {
+    const fullbox = getFullBox(payload);
+    var offset = fullbox.size;
+    var kv_array = [
+        {key: "Version", value: fullbox.version}
+    ];
+    if (fullbox.version === 1) {
+        kv_array = kv_array.concat([
+            {key: "Fragment Duration", value: bigIntString(payload, offset)}
+        ])
+    } else {
+        kv_array = kv_array.concat([
+            {key: "Fragment Duration", value: payload.readUIntBE(offset, 4)},
+        ]);
+    }
 
     return makeTable(kv_array);
 }

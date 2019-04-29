@@ -190,7 +190,7 @@ module.exports.atom = {
     mehd: {
         description: "movie extends header box",
         hasChild: false,
-        display: hex.outputHex
+        display: atom_view.parseMovieExtendsHeaderBox
     },
     trex: {
         description: "track extends defaults",
@@ -210,7 +210,7 @@ module.exports.atom = {
     mfhd: {
         description: "movie fragment header",
         hasChild: false,
-        display: hex.outputHex
+        display: atom_view.parseMovieFragmentHeaderBox
     },
     traf: {
         description: "track fragment",
@@ -220,12 +220,12 @@ module.exports.atom = {
     tfhd: {
         description: "track fragment header",
         hasChild: false,
-        display: hex.outputHex
+        display: atom_view.parseTrackFragmentHeaderBox
     },
     trun: {
         description: "track fragment run",
         hasChild: false,
-        display: hex.outputHex
+        display: atom_view.parseTrackFragmentRunBox
     },
     sdtp: {
         description: "independent and disposable samples",
