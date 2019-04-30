@@ -1,11 +1,11 @@
-const hex = require('./hex')
-const atom_view = require('./mp4_atom_view')
+const hex = require('../hex')
+const parser = require('./atom_parser')
 
 module.exports.atom = {
     ftyp: {
         description: "file type and compatibility",
         hasChild: false,
-        display: atom_view.parseFileTypeBox
+        display: parser.parseFileTypeBox
     },
     pdin: {
         description: "progressive download information",
@@ -20,7 +20,7 @@ module.exports.atom = {
     mvhd: {
         description: "movie header, overall declarations",
         hasChild: false,
-        display: atom_view.parseMovieHeaderBox
+        display: parser.parseMovieHeaderBox
     },
     trak: {
         description: "container for an individual track or stream",
@@ -30,12 +30,12 @@ module.exports.atom = {
     tkhd: {
         description: "track header, overall information about the track",
         hasChild: false,
-        display: atom_view.parseTrackHeaderBox
+        display: parser.parseTrackHeaderBox
     },
     tref: {
         description: "track reference container",
         hasChild: false,
-        display: atom_view.parseTrackReferenceBox
+        display: parser.parseTrackReferenceBox
     },
     edts: {
         description: "edit list container",
@@ -55,12 +55,12 @@ module.exports.atom = {
     mdhd: {
         description: "media header, overall information about the media",
         hasChild: false,
-        display: atom_view.parseMediaHeaderBox
+        display: parser.parseMediaHeaderBox
     },
     hdlr: {
         description: "handler, declares the media (handler) type",
         hasChild: false,
-        display: atom_view.parseHandlerReferenceBox
+        display: parser.parseHandlerReferenceBox
     },
     minf: {
         description: "media information container",
@@ -70,17 +70,17 @@ module.exports.atom = {
     vmhd: {
         description: "video media header, overall information (video track only)",
         hasChild: false,
-        display: atom_view.parseVideoMediaHeaderBox
+        display: parser.parseVideoMediaHeaderBox
     },
     smhd: {
         description: "sound media header, overall information (sound track only)",
         hasChild: false,
-        display: atom_view.parseSoundMediaHeaderBox
+        display: parser.parseSoundMediaHeaderBox
     },
     hmhd: {
         description: "hint media header, overall information (hint track only)",
         hasChild: false,
-        display: atom_view.parseHintMediaHeaderBox
+        display: parser.parseHintMediaHeaderBox
     },
     nmhd: {
         description: "Null media header, overall information (some tracks only)",
@@ -190,7 +190,7 @@ module.exports.atom = {
     mehd: {
         description: "movie extends header box",
         hasChild: false,
-        display: atom_view.parseMovieExtendsHeaderBox
+        display: parser.parseMovieExtendsHeaderBox
     },
     trex: {
         description: "track extends defaults",
@@ -210,7 +210,7 @@ module.exports.atom = {
     mfhd: {
         description: "movie fragment header",
         hasChild: false,
-        display: atom_view.parseMovieFragmentHeaderBox
+        display: parser.parseMovieFragmentHeaderBox
     },
     traf: {
         description: "track fragment",
@@ -220,12 +220,12 @@ module.exports.atom = {
     tfhd: {
         description: "track fragment header",
         hasChild: false,
-        display: atom_view.parseTrackFragmentHeaderBox
+        display: parser.parseTrackFragmentHeaderBox
     },
     trun: {
         description: "track fragment run",
         hasChild: false,
-        display: atom_view.parseTrackFragmentRunBox
+        display: parser.parseTrackFragmentRunBox
     },
     sdtp: {
         description: "independent and disposable samples",

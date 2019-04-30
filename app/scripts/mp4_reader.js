@@ -2,7 +2,7 @@ const file = require('js-utils').file;
 const hex = require('./scripts/hex');
 const readfile = require('./scripts/read_file');
 const viewStatus = require('./scripts/view_status');
-const mp4Atom = require('./scripts/mp4_atom');
+const atomTable = require('./scripts/mp4/atom_table');
 
 var mp4data;
 var selected_atom = {type: '', payload: ''};
@@ -77,7 +77,7 @@ function switchPayloadViewMode(selected) {
 
 function makeDisplay(type, payload) {
     if (document.getElementById('payload_view_preview').classList.contains('is-active')) {
-        return mp4Atom.atom[type] ? mp4Atom.atom[type].display(payload) : 'unknown atom type';
+        return atomTable.atom[type] ? atomTable.atom[type].display(payload) : 'unknown atom type';
     } else if (document.getElementById('payload_view_hex').classList.contains('is-active')) {
         return hex.outputHex(payload);
     } else {
@@ -91,7 +91,7 @@ function makePayloadElem(atom) {
 
     return {
         title:       type,
-        description: mp4Atom.atom[type] ? mp4Atom.atom[type].description : '',
+        description: atomTable.atom[type] ? atomTable.atom[type].description : '',
         preview:     broken_notice + makeDisplay(type, atom.payload)
     };
 }

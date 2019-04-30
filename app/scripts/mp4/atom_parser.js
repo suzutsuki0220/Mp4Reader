@@ -1,5 +1,5 @@
-const bigInt = require('./bigint');
-const decode = require('./decode');
+const bigInt = require('../bigint');
+const decode = require('../decode');
 
 function makeTable(kv_array) {
     var data = "";
