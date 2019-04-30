@@ -15,7 +15,7 @@ function openFileDialog() {
         title: 'select a data file',
         defaultPath: '.',
         filters: [
-            {name: 'MPEG4 media', extensions: ['mp4', 'm4a', 'm4v', 'mov']}
+            {name: 'movie file', extensions: ['mp4', 'm4a', 'm4v', 'mov', 'avi', 'wav']}
         ]});
 
     if (filenames && filenames.length > 0) {

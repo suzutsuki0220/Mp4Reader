@@ -1,13 +1,21 @@
 const fs = require('fs');
-const aviLoader = require('./avi/file_loader');
-const mp4Loader = require('./mp4/file_loader');
+const aviLoader = require('./avi/loader');
+const mp4Loader = require('./mp4/loader');
 const decode = require('./decode');
 
 var load_name = '';
 
+const AVI_PATTERN = /\.(avi|wav)$/i;
+const MP4_PATTERN = /\.(mov|mp4|m4v|m4a)$/i;
+
 function appropriateLoader(filename) {
-    // TODO: check avi/mp4
-    return mp4Loader;
+    if (AVI_PATTERN.test(filename.toLowerCase())) {
+        return aviLoader;
+    } else if (MP4_PATTERN.test(filename.toLowerCase())) {
+        return mp4Loader;
+    } else {
+        throw new Error('non compliant media file')
+    }
 }
 
 module.exports.load = function(filename, callback) {

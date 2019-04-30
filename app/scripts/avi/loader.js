@@ -29,11 +29,11 @@ function getChildAtom(movie_data, atom, index) {
     while (payload_offset < atom.payload.length) {
         const atom_index = index.concat(atom.children.length);
         const child = getAtom(movie_data, atom.payload_position + payload_offset, atom_index);
-        if (child.size === 0 || child.maybe_broken === true) {
+        if (child.size === CHUNK_HEADER_SIZE || child.maybe_broken === true) {
             break;
         }
         atom.children.push(child);
-        payload_offset += (child.size + CHUNK_HEADER_SIZE);
+        payload_offset += child.size;
     }
 }
 
@@ -45,7 +45,7 @@ function getAtom(movie_data, offset, index) {
     const size = getValidSize(buf);
     let atom = {
         index: index,  // 出現する順序
-        size: size.byte,
+        size: size.byte + CHUNK_HEADER_SIZE,
         type: isList(fourCC) ? fourCC + " - " + decode.typeString(buf, CHUNK_HEADER_SIZE) : fourCC,
         maybe_broken: size.broken,
         children: [],
