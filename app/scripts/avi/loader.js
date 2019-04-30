@@ -19,6 +19,10 @@ function getValidSize(buf) {
     };
 }
 
+function justifiedEvenSize(size) {
+    return size % 2 === 1 ? size + 1 : size;
+}
+
 // determine LIST (RIFF-List or List) or Chunk
 function isList(fourCC) {
     return fourCC === "RIFF" || fourCC === "LIST" ? true : false;
@@ -45,7 +49,7 @@ function getAtom(movie_data, offset, index) {
     const size = getValidSize(buf);
     let atom = {
         index: index,  // 出現する順序
-        size: size.byte + CHUNK_HEADER_SIZE,
+        size: justifiedEvenSize(size.byte + CHUNK_HEADER_SIZE),
         type: isList(fourCC) ? fourCC + " - " + decode.typeString(buf, CHUNK_HEADER_SIZE) : fourCC,
         maybe_broken: size.broken,
         children: [],
