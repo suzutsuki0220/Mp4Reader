@@ -43,7 +43,7 @@ function outputChild(data) {
     for (var i=0; i<data.length; i++) {
         tag += '<li id="' + makeAtomListId(data[i].index) + '" class="atom_list">';
         tag += '<a href="javascript:showPayload([' + data[i].index.toString() + '])">' + data[i].type + '</a>';
-        tag += ' (' + data[i].size + ')</li>';
+        tag += ' (' + data[i].payload.length + ')</li>';
         if (data[i].children.length !== 0) {
             tag += outputChild(data[i].children);
         }
