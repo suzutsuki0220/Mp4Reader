@@ -49,7 +49,7 @@ const menu_template = [
         submenu: [
             {role: 'reload'},
             {
-                label: '開発者ツール',
+                label: 'DevTools',
                 accelerator: 'Alt+Command+I',
                 click: function() {
                     mainWindow.openDevTools();
