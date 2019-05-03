@@ -36,6 +36,9 @@ MP4/MOVファイルのatom構造を解析して可視化するツールです。
     * 本ツールでは、用語として「atom」に相当する「chunk」も「atom」と呼んでいます
     * Preview の表示は全て「unknown atom type」になります
 
-# ライセンス
+# ライセンス表記
 
+* Bulma by Jeremy Thomas.  
+Code copyright 2019 Jeremy Thomas. Code released under the MIT license.
+* Font Awesome is licensed under the SIL OFL 1.1 License
 * Icons made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [www.flaticon.com](https://www.flaticon.com) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/)
