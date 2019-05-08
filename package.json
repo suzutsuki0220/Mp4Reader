@@ -5,7 +5,9 @@
   "description": "read headers of MP4 container",
   "main": "./app/index.js",
   "scripts": {
+    "macosicon": "cd ./resources/icon/macos; iconutil -c icns video-player.iconset",
     "build:windows": "electron-packager ./ Mp4Reader --platform=win32 --arch=x64 --asar --icon=./resources/icon/windows/video-player.ico --overwrite",
+    "build:macos": "electron-packager ./ Mp4Reader --platform=darwin --arch=x64 --asar --icon=./resources/icon/macos/video-player.icns --overwrite",
     "css-build": "node-sass _sass/main.scss app/stylesheets/main.css",
     "start": "./node_modules/.bin/electron .",
     "test": "./node_modules/.bin/jest",
