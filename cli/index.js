@@ -1,1 +1,1 @@
-return require('../app/main.js');
+return require('../app/script.bundle.js');

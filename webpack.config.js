@@ -8,13 +8,15 @@ ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     mode: MODE,
-    entry: [
-        './node_modules/@fortawesome/fontawesome-free/css/all.css',
-        './_sass/main.scss'
-    ],
+    target: 'node',
+    entry: {
+        font: './node_modules/@fortawesome/fontawesome-free/css/all.css',
+        stylesheet: './_sass/main.scss',
+        script: './lib/index.js'
+    },
     output: {
         path: path.join(__dirname, 'app/'),
-        filename: 'main.js'
+        filename: '[name].bundle.js'
     },
     module: {
         rules: [
@@ -41,6 +43,10 @@ module.exports = {
                         }
                     }
                 ],
+            },
+            {
+                test: /\.node$/,
+                use: 'node-loader'
             },
             {
                 // 画像など

@@ -1,10 +1,7 @@
-const libs = require('./index.js');
-const fileloader = libs.fileLoader;
-
-console.log(libs);
+require('./index.js');
 
 const filename = process.argv[2];
 
-fileloader.load(filename, function(atoms) {
+fileLoader.load(filename, function(atoms) {
     console.log(atoms);
 });

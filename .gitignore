@@ -61,4 +61,4 @@ typings/
 .next
 
 app/stylesheets/main.css
-app/main.js
+app/*.bundle.js
