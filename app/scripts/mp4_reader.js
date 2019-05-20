@@ -1,8 +1,8 @@
 const file = require('js-utils').file;
 const hex = require('./scripts/hex');
-const readfile = require('./scripts/read_file');
+//const readfile = require('./scripts/read_file');
 const viewStatus = require('./scripts/view_status');
-const atomTable = require('./scripts/mp4/atom_table');
+//const atomTable = require('./scripts/mp4/atom_table');
 
 var mp4data;
 var selected_atom = {type: '', payload: ''};
@@ -20,7 +20,7 @@ function openFileDialog() {
 
     if (filenames && filenames.length > 0) {
         document.getElementById('data_path').value = filenames[0];
-        readfile.load(filenames[0], output);
+        fileLoader.load(filenames[0], output);
     }
 }
 
@@ -113,7 +113,7 @@ function showPayload(index) {
 
 function downloadAtom() {
     const path = require('path');
-    const filename = path.basename(readfile.getFileName()) + "." + selected_atom.type + ".bin";
+    const filename = path.basename(fileLoader.getFileName()) + "." + selected_atom.type + ".bin";
 
     file.saveBlob(selected_atom.payload, filename);
 }
