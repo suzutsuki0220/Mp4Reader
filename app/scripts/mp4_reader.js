@@ -1,8 +1,8 @@
-const file = require('js-utils').file;
-const hex = require('./scripts/hex');
-//const readfile = require('./scripts/read_file');
-const viewStatus = require('./scripts/view_status');
-//const atomTable = require('./scripts/mp4/atom_table');
+const file = jsUtils.file;
+const hex = require('./scripts/hex.js');
+//const readfile = require('./scripts/read_file.js');
+const viewStatus = require('./scripts/view_status.js');
+//const atomTable = require('./scripts/mp4/atom_table.js');
 
 var mp4data;
 var selected_atom = {type: '', payload: ''};

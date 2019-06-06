@@ -1,5 +1,3 @@
-const jsUtils = require('js-utils');
-
 const output_limit = 100000;
 
 function table_header() {
