@@ -1,0 +1,22 @@
+{
+  "name": "mp4reader-app",
+  "productName": "Mp4Reader",
+  "version": "0.9.2",
+  "description": "read headers of MP4 container",
+  "main": "./index.js",
+  "scripts": {
+    "macosicon": "cd ../resources/icon/macos; iconutil -c icns video-player.iconset",
+    "build:windows": "electron-packager ./ Mp4Reader --platform=win32 --arch=x64 --asar --icon=../resources/icon/windows/video-player.ico --overwrite",
+    "build:macos": "electron-packager ./ Mp4Reader --platform=darwin --arch=x64 --asar --icon=../resources/icon/macos/video-player.icns --overwrite",
+    "start": "electron ."
+  },
+  "author": "suzutsuki0220",
+  "license": "MIT",
+  "dependencies": {
+    "big-integer": "^1.6.43"
+  },
+  "devDependencies": {
+    "electron": "^3.1.10",
+    "electron-packager": "^13.1.1"
+  }
+}

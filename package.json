@@ -1,15 +1,12 @@
 {
   "name": "mp4reader",
   "productName": "Mp4Reader",
-  "version": "0.9.1",
-  "description": "read headers of MP4 container",
-  "main": "./app/index.js",
+  "version": "0.9.2",
+  "description": "JavaScript library for read headers of MP4 and AVI container",
+  "main": "./index.js",
   "scripts": {
     "macosicon": "cd ./resources/icon/macos; iconutil -c icns video-player.iconset",
-    "build:windows": "electron-packager ./ Mp4Reader --platform=win32 --arch=x64 --asar --icon=./resources/icon/windows/video-player.ico --overwrite",
-    "build:macos": "electron-packager ./ Mp4Reader --platform=darwin --arch=x64 --asar --icon=./resources/icon/macos/video-player.icns --overwrite",
     "css-build": "node-sass _sass/main.scss app/stylesheets/main.css",
-    "start": "electron .",
     "test": "jest",
     "webpack": "npx webpack --mode production",
     "webpack-dev": "npx webpack"
@@ -23,13 +20,11 @@
     "webpack-cli": "^3.3.1"
   },
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "^5.8.1",
-    "bulma": "^0.7.4",
+    "@fortawesome/fontawesome-free": "^5.9.0",
+    "bulma": "^0.7.5",
     "css-loader": "^2.1.1",
-    "electron": "^3.1.8",
-    "electron-packager": "^13.1.1",
     "extract-text-webpack-plugin": "^3.0.2",
-    "jest": "^24.7.1",
+    "jest": "^24.8.0",
     "node-loader": "^0.6.0",
     "node-sass": "^4.12.0",
     "sass-loader": "^7.1.0",
