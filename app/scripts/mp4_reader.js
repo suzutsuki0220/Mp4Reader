@@ -75,9 +75,17 @@ function switchPayloadViewMode(selected) {
     viewStatus.setPayload(makePayloadElem(selected_atom));
 }
 
+function previewAtom(tb, payload) {
+    if (!tb) {
+        return 'unknown atom type';
+    }
+
+    return tb.parser ? tb.display(tb.parser(payload)) : 'unable to preview';
+}
+
 function makeDisplay(type, payload) {
     if (document.getElementById('payload_view_preview').classList.contains('is-active')) {
-        return atomTable.atom[type] ? atomTable.atom[type].display(payload) : 'unknown atom type';
+        return previewAtom(atomTable.atom[type], payload);
     } else if (document.getElementById('payload_view_hex').classList.contains('is-active')) {
         return hex.outputHex(payload);
     } else {
