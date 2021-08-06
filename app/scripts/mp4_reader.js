@@ -5,7 +5,7 @@ const viewStatus = require('./scripts/view_status.js');
 //const atomTable = require('./scripts/mp4/atom_table.js');
 
 var mp4data;
-var selected_atom = {type: '', payload: ''};
+var selected_atom = {type: '', payload: '', parentInfo: {}};
 
 function openFileDialog() {
     const dialog = require('electron').remote.dialog;
@@ -75,19 +75,20 @@ function switchPayloadViewMode(selected) {
     viewStatus.setPayload(makePayloadElem(selected_atom));
 }
 
-function previewAtom(tb, payload) {
+function previewAtom(atom) {
+    const tb = atomTable.atom[atom.type];
     if (!tb) {
         return 'unknown atom type';
     }
 
-    return tb.parser ? tb.display(tb.parser(payload)) : 'unable to preview';
+    return tb.parser ? tb.display(tb.parser(atom.payload, atom.parentInfo)) : 'unable to preview';
 }
 
-function makeDisplay(type, payload) {
+function makeDisplay(atom) {
     if (document.getElementById('payload_view_preview').classList.contains('is-active')) {
-        return previewAtom(atomTable.atom[type], payload);
+        return previewAtom(atom);
     } else if (document.getElementById('payload_view_hex').classList.contains('is-active')) {
-        return hex.outputHex(payload);
+        return hex.outputHex(atom.payload);
     } else {
         return 'missing preview mode';
     }
@@ -100,7 +101,7 @@ function makePayloadElem(atom) {
     return {
         title:       type,
         description: atomTable.atom[type] ? atomTable.atom[type].description : '',
-        preview:     broken_notice + makeDisplay(type, atom.payload)
+        preview:     broken_notice + makeDisplay(atom)
     };
 }
 
