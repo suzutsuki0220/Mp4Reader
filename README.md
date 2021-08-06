@@ -37,6 +37,14 @@ MP4/MOVファイルのatom構造を解析して可視化するツールです。
     * LIST chunk の Data にChunk IDが含まれた場合、本ツールでは ID 分のサイズ(4バイト)を引いた Payload のサイズを出しています。その為、他のツールと見比べた時に、 Chunk の Size 値をそのまま表示する動作の場合は値が異なってしまいます
     * Preview の表示は全て「unknown atom type」になります
 
+# 開発者向け情報
+
+* Node.jsの他に、python (v2.7系)が必要です。
+* 加えて、以下のコマンドを入れてwindows用のビルドツールをインストールします
+```
+npm install --global windows-build-tools
+```
+
 # ライセンス表記
 
 * Bulma by Jeremy Thomas.  
