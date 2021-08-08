@@ -4,8 +4,9 @@ const hex = require('./scripts/hex.js');
 const viewStatus = require('./scripts/view_status.js');
 //const atomTable = require('./scripts/mp4/atom_table.js');
 
-var mp4data;
-var selected_atom = {type: '', payload: '', parentInfo: {}};
+let mp4data;
+let fileData;
+let selected_atom = {type: '', payload: '', parentInfo: {}};
 
 function openFileDialog() {
     const dialog = require('electron').remote.dialog;
@@ -53,8 +54,9 @@ function outputChild(data) {
     return tag;
 }
 
-function output(atoms) {
+function output(atoms, binary) {
     mp4data = atoms;
+    fileData = binary;
 
     var str = '<div class="content">' + outputChild(atoms) + '</div>';
 
@@ -125,4 +127,11 @@ function downloadAtom() {
     const filename = path.basename(fileLoader.getFileName()) + "." + selected_atom.type + ".bin";
 
     file.saveBlob(selected_atom.payload, filename);
+}
+
+function downloadPirtial(offset, size) {
+    const path = require('path');
+    const filename = path.basename(fileLoader.getFileName()) + "_" + offset + '-' + (offset + size) + ".bin";
+
+    file.saveBlob(fileData.slice(offset, offset + size), filename);
 }
